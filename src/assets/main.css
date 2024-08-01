@@ -1,0 +1,142 @@
+@import "./base.css";
+
+#app {
+  min-width: var(--max-width);
+  max-width: 1280px;
+  min-height: var(--max-height);
+  max-height: var(--max-height);
+  overflow: hidden;
+
+  margin: 0 auto;
+  font-weight: normal;
+
+
+
+  display: flex;
+  flex-direction: column;
+}
+
+.headerM,
+.footerM {
+  min-height: var(--height_header-footer);
+  max-height: var(--height_header-footer);
+
+  background-color: #212121;
+  color: #fff;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 0 var(--p-base);
+}
+
+.headerM {
+  justify-content: space-between;
+}
+
+.footerM {
+  justify-content: space-evenly;
+}
+
+.mainM {
+  min-height: var(--page-height);
+  max-height: var(--page-height);
+
+  overflow-y: hidden;
+}
+
+.page {
+  min-height: var(--page-height);
+  max-height: var(--page-height);
+
+  overflow-y: auto;
+}
+
+.int {
+  min-height: var(--page-int-height);
+  max-height: var(--page-int-height);
+}
+
+
+.nav-link {
+  text-decoration: none;
+  color: var(--color-text-invert);
+
+  display: flex;
+
+  font-size: 33px;
+  cursor: pointer;
+}
+
+.nav-link:active {
+  scale: .95;
+}
+
+.active {
+  transition: all ease .4s;
+  color: var(--green2);
+  font-weight: bold;
+}
+
+.group-links {
+  display: flex;
+  align-items: center;
+  gap: var(--p-base);
+}
+
+.input, .rounded-btn_input {
+  height: var(--input-height);
+
+  background-color: var(--white);
+  border: solid 1px var(--white);
+}
+
+.search-header {
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  max-width: 180px;
+  border-radius: 20px 0 0 20px;
+  -webkit-border-radius: 20px 0 0 20px;
+  -moz-border-radius: 20px 0 0 20px;
+  -ms-border-radius: 20px 0 0 20px;
+  -o-border-radius: 20px 0 0 20px;
+
+  padding: 0 0 0 var(--p-base);
+  font-size: 16px;
+}
+
+.input:focus {
+  box-shadow: inset 0 0 6px var(--green1);
+  outline: none;
+}
+
+
+.rounded-btn_input {
+  width: var(--input-height);
+  
+
+  border-radius: 0 20px 20px 0;
+  -webkit-border-radius: 0 20px 20px 0;
+  -moz-border-radius: 0 20px 20px 0;
+  -ms-border-radius: 0 20px 20px 0;
+  -o-border-radius: 0 20px 20px 0;
+  cursor: pointer;
+}
+
+.rounded-btn_input:hover {
+  transition: all ease .4s;
+  -webkit-transition: all ease .4s;
+  -moz-transition: all ease .4s;
+  -ms-transition: all ease .4s;
+  -o-transition: all ease .4s;
+
+  background-color: var(--green1);
+  color: var(--white);
+}
+
+.rounded-btn_input:active {
+  scale: 1.095;
+}

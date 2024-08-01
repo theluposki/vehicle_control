@@ -1,0 +1,83 @@
+/* color palette from <https://github.com/vuejs/theme> */
+:root {
+  --max-width: 100svw;
+  --max-height: 100svh;
+  --p-base: 12px;
+  --height_header-footer: 60px;
+  --page-height: calc(var(--max-height) - 2 * var(--height_header-footer));
+  --page-int-height: calc(var(--max-height) - 4 * var(--height_header-footer));
+  --input-height: 33px;
+
+  --dark: #212121;
+  --white: #f4f4f4;
+
+  --green: #004521;
+  --green1: #01602a;
+  --green2: #00873a;
+  --green3: #77dc1f;
+
+  --color-text: var(--dark);
+  --color-text-invert: var(--white);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+
+  -webkit-touch-callout: none;
+  -webkit-text-size-adjust: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  -webkit-user-drag: none;
+  -moz-user-drag: none;
+
+  outline: none;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ddd;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #212121;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #444444;
+}
+
+body {
+  min-height: var(--max-height);
+  max-height: var(--max-height);
+  color: var(--color-text);
+  background: var(--color-background);
+  transition: color 0.5s, background-color 0.5s;
+  line-height: 1.6;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  font-size: 15px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
