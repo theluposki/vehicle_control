@@ -1,0 +1,1 @@
+import{E as t}from"./Emitter-BG7KJySb.js";import{h as s,c as a,o as e}from"./index-DASGDnOQ.js";const r={class:"page int"},_={__name:"ListCars",setup(o){return s(()=>{t.emit("list-car")}),(c,n)=>(e(),a("main",r," Listar Carros "))}};export{_ as default};
