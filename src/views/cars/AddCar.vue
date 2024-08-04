@@ -4,6 +4,9 @@ import { onMounted } from 'vue';
 
 onMounted(() => {
   Emitter.emit('add-car')
+  setTimeout(() => {
+    Emitter.emit('name-route', 'Adicionar')
+  }, 100)
 })
 </script>
 

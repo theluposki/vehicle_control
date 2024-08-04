@@ -2,7 +2,7 @@
 import { Emitter } from '../../utils/Emitter.js'
 import { ref } from 'vue'
 
-import AddCarsHeader from './components/addCarsHeader.vue';
+import backHeader from './backHeader.vue';
 import ListCarsHeader from './components/listCarsHeader.vue';
 
 const header = ref({
@@ -27,7 +27,7 @@ Emitter.on('add-car', () => {
 <template>
     <header class="headerM">
         <ListCarsHeader v-if="header.cars.list"/>
-        <AddCarsHeader v-if="header.cars.add" />
+        <backHeader v-if="header.cars.add" />
     </header>
 </template>
 
