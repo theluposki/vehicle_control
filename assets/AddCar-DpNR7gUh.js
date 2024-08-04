@@ -1,1 +1,0 @@
-import{E as a}from"./Emitter-BG7KJySb.js";import{h as t,c as e,o}from"./index-DASGDnOQ.js";const r={class:"page int"},_={__name:"AddCar",setup(c){return t(()=>{a.emit("add-car")}),(n,s)=>(o(),e("main",r," Adicionar Carro "))}};export{_ as default};
