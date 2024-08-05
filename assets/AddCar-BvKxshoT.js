@@ -1,1 +1,0 @@
-import{E as e}from"./Emitter-BG7KJySb.js";import{i as t,c as a,o}from"./index-CCYe18br.js";const r={class:"page int"},_={__name:"AddCar",setup(i){return t(()=>{e.emit("add-car"),setTimeout(()=>{e.emit("name-route","Adicionar")},100)}),(n,c)=>(o(),a("main",r," Adicionar Carro "))}};export{_ as default};
