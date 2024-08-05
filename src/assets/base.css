@@ -5,7 +5,7 @@
   --p-base: 12px;
   --height_header-footer: 60px;
   --page-height: calc(var(--max-height) - 2 * var(--height_header-footer));
-  --page-int-height: calc(var(--max-height) - 4 * var(--height_header-footer));
+  --page-int-height: calc(var(--max-height) - 3 * var(--height_header-footer));
   --input-height: 33px;
 
   --dark: #212121;
@@ -15,6 +15,8 @@
   --green1: #01602a;
   --green2: #00873a;
   --green3: #77dc1f;
+
+  --orange: #ff8343;
 
   --color-text: var(--dark);
   --color-text-invert: var(--white);

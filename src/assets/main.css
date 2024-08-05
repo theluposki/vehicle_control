@@ -97,21 +97,37 @@
   align-items: center;
 }
 
-.input {
+.input, .textarea {
   max-width: 180px;
+  padding: 0 0 0 var(--p-base);
+  font-size: 16px;
+
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+}
+
+
+.input:focus, .textarea:focus, .input-radio:focus {
+  outline: solid 2px var(--green3);
+}
+
+.input-radio {
+  accent-color: var(--green3);
+}
+
+.search-header > .input {
   border-radius: 20px 0 0 20px;
   -webkit-border-radius: 20px 0 0 20px;
   -moz-border-radius: 20px 0 0 20px;
   -ms-border-radius: 20px 0 0 20px;
   -o-border-radius: 20px 0 0 20px;
-
-  padding: 0 0 0 var(--p-base);
-  font-size: 16px;
 }
 
-.input:focus {
+.search-header > .input:focus {
   box-shadow: inset 0 0 6px var(--green1);
-  outline: none;
 }
 
 
@@ -140,4 +156,95 @@
 
 .rounded-btn_input:active {
   scale: 1.095;
+}
+
+.form-control {
+  display: flex;
+  flex-direction: column;
+  padding: var(--p-base);
+}
+
+.form-control > label {
+  padding: 0 var(--p-base);
+  font-weight: bold;
+  color: var(--green2);
+}
+
+.form-control > .label-required::before {
+  content: "* ";
+  color: red;
+}
+
+.form-control > .input, .form-control > .textarea  {
+  min-width: 100%;
+}
+
+.form-control > .btn {
+  min-height: var(--input-height);
+  border: solid 1px transparent;
+  background-color: var(--green2);
+  color: var(--white);
+  font-weight: bold;
+
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+}
+.form-control > .btn:hover {
+  opacity: .9;
+  transition: all ease .4s;
+  -webkit-transition: all ease .4s;
+  -moz-transition: all ease .4s;
+  -ms-transition: all ease .4s;
+  -o-transition: all ease .4s;
+}
+.form-control > .btn:active {
+  scale: .95;
+}
+
+.form-control > .btn:focus {
+  outline: solid 2px var(--green3);
+  border: solid 1px var(--white);
+}
+
+.form-control > .textarea {
+  resize: none;
+  font-size: 14px;
+  min-height: 100px;
+  padding: var(--p-base);
+}
+
+.form-group {
+  width: 100%;
+  padding: var(--p-base);
+  display: flex;
+  gap: var(--p-base);
+}
+
+.form-group > .field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 var(--p-base);
+}
+
+.label-radio {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.label-radio::before {
+  content: "* ";
+  color: red;
+}
+
+.consumidor {
+  color: var(--green2);
+}
+
+.revenda {
+  color: var(--orange);
 }
