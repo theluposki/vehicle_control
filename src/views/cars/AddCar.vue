@@ -17,6 +17,40 @@ const vehicle = ref({
   qtdPecas: null,
   observacao: ""
 })
+
+
+
+const placaValida = ref(true);
+
+function validarPlaca() {
+  const placaValue = vehicle.value.placa.trim();
+
+  const regexMercosul = /^[A-Z]{3}\d[A-Z]\d{2}$/;
+
+  const regexAntigo = /^[A-Z]{3}-\d{4}$/;
+
+  placaValida.value = regexMercosul.test(placaValue) || regexAntigo.test(placaValue);
+
+  if (!placaValida.value) {
+    document.getElementById('placa').scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+let timeoutValidaPlacaVal;
+
+const timeoutValidaPlaca = () => {
+  if (timeoutValidaPlacaVal) {
+    clearTimeout(timeoutValidaPlacaVal);
+  }
+  timeoutValidaPlacaVal = setTimeout(() => {
+    validarPlaca();
+  }, 600);
+}
+
+const send = () => {
+  validarPlaca()
+}
+
 </script>
 
 
@@ -24,8 +58,17 @@ const vehicle = ref({
   <main class="page int">
     <div class="form-control">
       <label for="placa" class="label-required">Placa:</label>
-      <input type="text" tabindex="1" class="input" v-model="vehicle.placa" id="placa"
-        placeholder="digite a placa do veículo">
+      <input 
+      type="text" 
+      tabindex="1" 
+      :class="{'input': true, 'invalid': !placaValida}" 
+      v-model="vehicle.placa" 
+      id="placa"
+      @keyup="timeoutValidaPlaca"
+      placeholder="Digite a placa do veículo"
+      @blur="validarPlaca"
+    >
+    <p v-if="!placaValida" class="error-message">Placa inválida!</p>
     </div>
 
     <div class="form-control">
@@ -71,10 +114,21 @@ const vehicle = ref({
     </div>
 
     <div class="form-control">
-      <button class="btn" tabindex="8">
+      <button class="btn" @click="send" tabindex="8">
         Registrar
       </button>
     </div>
 
   </main>
 </template>
+
+<style scoped>
+.invalid {
+  outline: 2px solid red;
+}
+
+.error-message {
+  color: red;
+  margin-top: 5px;
+}
+</style>
