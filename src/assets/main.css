@@ -286,3 +286,9 @@
 #revenda {
   accent-color: var(--orange);
 }
+
+details {
+  padding: 0 var(--p-base);
+  color: var(--green2);
+  cursor: pointer;
+}
