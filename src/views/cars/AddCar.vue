@@ -5,7 +5,7 @@ import { onMounted, ref } from 'vue';
 onMounted(() => {
   Emitter.emit('add-car')
   setTimeout(() => {
-    Emitter.emit('name-route', 'Adicionar nova entrada')
+    Emitter.emit('name-route', 'Finalizar etapa troca de peças')
   }, 100)
 })
 
@@ -29,6 +29,7 @@ const vehicle = ref({
 
 
 const placaValida = ref(true);
+const modeloValido = ref(true);
 
 function validarPlaca() {
   const placaValue = vehicle.value.placa.trim();
@@ -44,7 +45,7 @@ function validarPlaca() {
   }
 }
 
-let timeoutValidaPlacaVal;
+let timeoutValidaPlacaVal, timeoutValidaModeloVal;
 
 const timeoutValidaPlaca = () => {
   if (timeoutValidaPlacaVal) {
@@ -55,8 +56,27 @@ const timeoutValidaPlaca = () => {
   }, 600);
 }
 
+const timeoutValidaModelo = () => {
+  if (timeoutValidaModeloVal) {
+    clearTimeout(timeoutValidaModeloVal);
+  }
+  timeoutValidaModeloVal = setTimeout(() => {
+    validarModelo();
+  }, 600);
+}
+
+function validarModelo() {
+  const modeloValue = vehicle.value.modelo
+  modeloValido.value = true
+  if (!modeloValue || modeloValue == "" || null) {
+    modeloValido.value = false
+    document.getElementById('modelo').scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
 const send = () => {
-  validarPlaca()
+  validarPlaca();
+  validarModelo();
 }
 
 </script>
@@ -74,8 +94,9 @@ const send = () => {
 
     <div class="form-control">
       <label for="modelo" class="label-required">Modelo:</label>
-      <input type="text" list="modelos" tabindex="2" class="input" v-model="vehicle.modelo" id="modelo"
-        placeholder="modelo do veículo">
+      <input type="text" list="modelos" tabindex="2" :class="{ 'input': true, 'invalid': !modeloValido }"
+        v-model="vehicle.modelo" id="modelo" @keyup="timeoutValidaModelo" placeholder="modelo do veículo">
+      <p v-if="!modeloValido" class="error-message">ops, esqueceu de digitar o modelo!</p>
     </div>
 
     <datalist id="modelos">
