@@ -9,6 +9,14 @@ onMounted(() => {
   }, 100)
 })
 
+const modelos = ref([
+  'Argo',
+  'Onix',
+  'Onix Plus',
+  'KA',
+  'Mobi'
+])
+
 const vehicle = ref({
   placa: null,
   modelo: null,
@@ -64,8 +72,9 @@ const send = () => {
       :class="{'input': true, 'invalid': !placaValida}" 
       v-model="vehicle.placa" 
       id="placa"
+      maxlength="7"
       @keyup="timeoutValidaPlaca"
-      placeholder="Digite a placa do veículo"
+      placeholder="placa do veículo. EX: ABC1D123 ou ABC-1234"
       @blur="validarPlaca"
     >
     <p v-if="!placaValida" class="error-message">Placa inválida!</p>
@@ -73,11 +82,17 @@ const send = () => {
 
     <div class="form-control">
       <label for="modelo" class="label-required">Modelo:</label>
-      <input type="text" tabindex="2" class="input" v-model="vehicle.modelo" id="modelo"
-        placeholder="digite o modelo do veículo">
+      <input type="text" list="modelos" tabindex="2" class="input" v-model="vehicle.modelo" id="modelo"
+        placeholder="modelo do veículo">
     </div>
 
+    <datalist id="modelos">
+      <option v-for="item in modelos" :value="item"></option>
+    </datalist>
+
     <div class="form-group">
+      <fieldset>
+        <legend>Segmentação</legend>
       <div class="field">
         <label for="consumidor" class="label-radio consumidor">Consumidor</label>
         <input type="radio" tabindex="3" id="consumidor" name="segmentacao" class="input-radio"
@@ -88,9 +103,12 @@ const send = () => {
         <input type="radio" tabindex="4" id="revenda" name="segmentacao" class="input-radio"
           v-model="vehicle.segmentacao" value="revenda">
       </div>
+      </fieldset>
     </div>
 
     <div class="form-group">
+      <fieldset>
+        <legend>Tipo de serviço</legend>
       <div class="field">
         <label for="tp" class="label-radio tp">Troca de peça</label>
         <input type="radio" tabindex="5" id="tp" name="tipo" class="input-radio" v-model="vehicle.tipo" value="TP">
@@ -100,11 +118,12 @@ const send = () => {
         <input type="radio" tabindex="6" id="sm" name="tipo" class="input-radio" v-model="vehicle.tipo"
           value="SM">
       </div>
+      </fieldset>
     </div>
 
     <div class="form-control">
       <label for="qtdPecas" class="label-required">Quantidade de Peças:</label>
-      <input type="number" tabindex="7" class="input" v-model.number="vehicle.qtdPecas" id="qtdPecas" placeholder="Ex: 3">
+      <input type="tel" min="1" max="2" maxlength="2" tabindex="7" class="input" v-model.number="vehicle.qtdPecas" id="qtdPecas" placeholder="Ex: 3">
     </div>
 
     <div class="form-control">
@@ -116,6 +135,7 @@ const send = () => {
     <div class="form-control">
       <button class="btn" @click="send" tabindex="8">
         Registrar
+        <i class="ri-save-3-fill"></i>
       </button>
     </div>
 
@@ -131,4 +151,5 @@ const send = () => {
   color: red;
   margin-top: 5px;
 }
+
 </style>

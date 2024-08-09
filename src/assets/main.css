@@ -191,6 +191,8 @@
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;
   -o-border-radius: 4px;
+
+  cursor: pointer;
 }
 .form-control > .btn:hover {
   opacity: .9;
@@ -223,10 +225,34 @@
   gap: var(--p-base);
 }
 
-.form-group > .field {
+.form-group > fieldset {
+  width: 100%;
+  display: flex;
+  gap: calc(2 * var(--p-base));
+  border: 2px solid #dadada;
+  
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+}
+
+.form-group > fieldset > legend {
+  color: var(--green2);
+  font-weight: bold;
+}
+
+.form-group > fieldset > legend::before {
+  content: "* ";
+  color: red;
+}
+
+.form-group  .field {
   position: relative;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 4px;
   padding: 0 var(--p-base);
 }
@@ -236,9 +262,17 @@
   cursor: pointer;
 }
 
+.label-radio:active {
+  scale: .95;
+}
+
 .label-radio::before {
   content: "* ";
   color: red;
+}
+
+.label-radio::before {
+  content: " ";
 }
 
 .consumidor {
@@ -247,4 +281,8 @@
 
 .revenda {
   color: var(--orange);
+}
+
+#revenda {
+  accent-color: var(--orange);
 }
