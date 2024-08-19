@@ -29,23 +29,33 @@ const vehicle = ref({
 
 
 const placaValida = ref(true);
+const placaNotEmpty = ref(true);
 const modeloValido = ref(true);
+const segmentacaoNotEmpty = ref(true);
+const tipoNotEmpty = ref(true);
+const qtdPecasNotEmpty = ref(true);
 
 function validarPlaca() {
-  const placaValue = vehicle.value.placa.trim();
+  if (!vehicle.value.placa) {
+    document.getElementById('placa').scrollIntoView({ behavior: 'smooth' });
+    placaNotEmpty.value = false
+    return
+  }
+
+  placaNotEmpty.value = true
+  const placaValue = vehicle?.value.placa.trim();
 
   const regexMercosul = /^[A-Z]{3}\d[A-Z]\d{2}$/;
 
   const regexAntigo = /^[A-Z]{3}-\d{4}$/;
 
   placaValida.value = regexMercosul.test(placaValue) || regexAntigo.test(placaValue);
-
   if (!placaValida.value) {
     document.getElementById('placa').scrollIntoView({ behavior: 'smooth' });
   }
 }
 
-let timeoutValidaPlacaVal, timeoutValidaModeloVal;
+let timeoutValidaPlacaVal, timeoutValidaModeloVal, timeoutValidaQtdPecasVal;
 
 const timeoutValidaPlaca = () => {
   if (timeoutValidaPlacaVal) {
@@ -65,6 +75,15 @@ const timeoutValidaModelo = () => {
   }, 600);
 }
 
+const timeoutValidaQtdPecas = () => {
+  if (timeoutValidaQtdPecasVal) {
+    clearTimeout(timeoutValidaQtdPecasVal);
+  }
+  timeoutValidaQtdPecasVal = setTimeout(() => {
+    validarQtdPecas();
+  }, 600);
+}
+
 function validarModelo() {
   const modeloValue = vehicle.value.modelo
   modeloValido.value = true
@@ -74,9 +93,39 @@ function validarModelo() {
   }
 }
 
+function validaSegmentacao() {
+  if (!vehicle.value.segmentacao) {
+    document.getElementById('segmentacao').scrollIntoView({ behavior: 'smooth' });
+    segmentacaoNotEmpty.value = false
+    return
+  }
+  segmentacaoNotEmpty.value = true
+}
+
+function validaTipo() {
+  if (!vehicle.value.tipo) {
+    document.getElementById('tipo').scrollIntoView({ behavior: 'smooth' });
+    tipoNotEmpty.value = false
+    return
+  }
+  tipoNotEmpty.value = true
+}
+
+function validarQtdPecas() {
+  const qtdPecasValue = vehicle.value.qtdPecas
+  qtdPecasNotEmpty.value = true
+  if (!qtdPecasValue || qtdPecasValue == "" || null) {
+    qtdPecasNotEmpty.value = false
+    document.getElementById('qtdPecas').scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
 const send = () => {
   validarPlaca();
   validarModelo();
+  validaSegmentacao();
+  validaTipo();
+  validarQtdPecas();
 }
 
 </script>
@@ -86,10 +135,11 @@ const send = () => {
   <main class="page int">
     <div class="form-control">
       <label for="placa" class="label-required">Placa:</label>
-      <input type="text" tabindex="1" :class="{ 'input': true, 'invalid': !placaValida }" v-model="vehicle.placa"
-        id="placa" maxlength="7" @keyup="timeoutValidaPlaca" placeholder="placa do veículo. EX: ABC1D123 ou ABC-1234"
-        @blur="validarPlaca">
+      <input type="text" tabindex="1" :class="{ 'input': true, 'invalid': !placaValida || !placaNotEmpty }"
+        v-model="vehicle.placa" id="placa" maxlength="7" @keyup="timeoutValidaPlaca"
+        placeholder="placa do veículo. EX: ABC1D123 ou ABC-1234" @blur="validarPlaca">
       <p v-if="!placaValida" class="error-message">Placa inválida!</p>
+      <p v-if="!placaNotEmpty" class="error-message">Placa é obrigatória!</p>
     </div>
 
     <div class="form-control">
@@ -103,8 +153,8 @@ const send = () => {
       <option v-for="item in modelos" :value="item"></option>
     </datalist>
 
-    <div class="form-group">
-      <fieldset>
+    <div class="form-group" id="segmentacao">
+      <fieldset :class="{ 'fieldsetNotSelected': !segmentacaoNotEmpty }">
         <legend>Segmentação</legend>
         <div class="field">
           <label for="consumidor" class="label-radio consumidor">Consumidor</label>
@@ -119,8 +169,8 @@ const send = () => {
       </fieldset>
     </div>
 
-    <div class="form-group">
-      <fieldset>
+    <div class="form-group" id="tipo">
+      <fieldset :class="{ 'fieldsetNotSelected': !tipoNotEmpty }">
         <legend>Tipo de serviço</legend>
         <div class="field">
           <label for="tp" class="label-radio tp">Troca de peça</label>
@@ -135,8 +185,11 @@ const send = () => {
 
     <div class="form-control">
       <label for="qtdPecas" class="label-required">Quantidade de Peças:</label>
-      <input type="tel" min="1" max="2" maxlength="2" tabindex="7" class="input" v-model.number="vehicle.qtdPecas"
-        id="qtdPecas" placeholder="Ex: 3">
+      <input type="tel" min="1" max="2" maxlength="2" tabindex="7"
+        :class="{ 'input': true, 'invalid': !qtdPecasNotEmpty }" v-model.number="vehicle.qtdPecas" id="qtdPecas"
+        placeholder="Ex: 3"
+        @keyup="timeoutValidaQtdPecas">
+      <p v-if="!qtdPecasNotEmpty" class="error-message">ops, esqueceu de digitar a quantidade de peças!</p>
     </div>
 
 
