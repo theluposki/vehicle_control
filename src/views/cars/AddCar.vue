@@ -120,12 +120,21 @@ function validarQtdPecas() {
   }
 }
 
-const send = () => {
+const validate = () => {
   validarPlaca();
   validarModelo();
   validaSegmentacao();
   validaTipo();
   validarQtdPecas();
+}
+
+const send = () => {
+  if (!vehicle.value.placa || !vehicle.value.modelo || !vehicle.value.segmentacao || !vehicle.value.tipo || !vehicle.value.qtdPecas) {
+    validate();
+    return
+  }
+
+  console.log("registrado");
 }
 
 </script>
@@ -158,13 +167,13 @@ const send = () => {
         <legend>Segmentação</legend>
         <div class="field">
           <label for="consumidor" class="label-radio consumidor">Consumidor</label>
-          <input type="radio" tabindex="3" id="consumidor" name="segmentacao" class="input-radio"
-            v-model="vehicle.segmentacao" value="consumidor">
+          <input type="radio" @change="validaSegmentacao" tabindex="3" id="consumidor" name="segmentacao"
+            class="input-radio" v-model="vehicle.segmentacao" value="consumidor">
         </div>
         <div class="field">
           <label for="revenda" class="label-radio revenda">Revenda</label>
-          <input type="radio" tabindex="4" id="revenda" name="segmentacao" class="input-radio"
-            v-model="vehicle.segmentacao" value="revenda">
+          <input type="radio" @change="validaSegmentacao" tabindex="4" id="revenda" name="segmentacao"
+            class="input-radio" v-model="vehicle.segmentacao" value="revenda">
         </div>
       </fieldset>
     </div>
@@ -174,11 +183,13 @@ const send = () => {
         <legend>Tipo de serviço</legend>
         <div class="field">
           <label for="tp" class="label-radio tp">Troca de peça</label>
-          <input type="radio" tabindex="5" id="tp" name="tipo" class="input-radio" v-model="vehicle.tipo" value="TP">
+          <input type="radio" @change="validaTipo" tabindex="5" id="tp" name="tipo" class="input-radio"
+            v-model="vehicle.tipo" value="TP">
         </div>
         <div class="field">
           <label for="sm" class="label-radio sm">Serviço mecânico</label>
-          <input type="radio" tabindex="6" id="sm" name="tipo" class="input-radio" v-model="vehicle.tipo" value="SM">
+          <input type="radio" @change="validaTipo" tabindex="6" id="sm" name="tipo" class="input-radio"
+            v-model="vehicle.tipo" value="SM">
         </div>
       </fieldset>
     </div>
@@ -187,8 +198,7 @@ const send = () => {
       <label for="qtdPecas" class="label-required">Quantidade de Peças:</label>
       <input type="tel" min="1" max="2" maxlength="2" tabindex="7"
         :class="{ 'input': true, 'invalid': !qtdPecasNotEmpty }" v-model.number="vehicle.qtdPecas" id="qtdPecas"
-        placeholder="Ex: 3"
-        @keyup="timeoutValidaQtdPecas">
+        placeholder="Ex: 3" @keyup="timeoutValidaQtdPecas">
       <p v-if="!qtdPecasNotEmpty" class="error-message">ops, esqueceu de digitar a quantidade de peças!</p>
     </div>
 
