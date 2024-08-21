@@ -169,7 +169,7 @@ const keepAliveVehicle = () => {
 }
 
 const setVehicleAlive = () => {
-  setTimeout(() => {
+
     if (localStorage.getItem(VEHICLE_STORAGE)) {
       const aliveVehicleJson = localStorage.getItem(VEHICLE_STORAGE)
 
@@ -182,8 +182,6 @@ const setVehicleAlive = () => {
         document.querySelector('#detailsObservacao').open = true;
       }
     }
-  }, 100)
-
 }
 
 const send = () => {
