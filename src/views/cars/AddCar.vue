@@ -6,7 +6,9 @@ onMounted(() => {
   Emitter.emit('add-car')
   setTimeout(() => {
     Emitter.emit('name-route', 'Finalizar etapa troca de peças')
-  }, 100)
+  }, 100);
+
+  setVehicleAlive();
 })
 
 const modelos = ref([
@@ -24,9 +26,7 @@ const vehicle = ref({
   tipo: null,
   qtdPecas: null,
   observacao: ""
-})
-
-
+});
 
 const placaValida = ref(true);
 const placaNotEmpty = ref(true);
@@ -55,7 +55,7 @@ function validarPlaca() {
   }
 }
 
-let timeoutValidaPlacaVal, timeoutValidaModeloVal, timeoutValidaQtdPecasVal;
+let timeoutValidaPlacaVal, timeoutValidaModeloVal, timeoutValidaQtdPecasVal, timeoutObservationVal;
 
 const timeoutValidaPlaca = () => {
   if (timeoutValidaPlacaVal) {
@@ -63,6 +63,7 @@ const timeoutValidaPlaca = () => {
   }
   timeoutValidaPlacaVal = setTimeout(() => {
     validarPlaca();
+    keepAliveVehicle();
   }, 600);
 }
 
@@ -72,6 +73,7 @@ const timeoutValidaModelo = () => {
   }
   timeoutValidaModeloVal = setTimeout(() => {
     validarModelo();
+    keepAliveVehicle();
   }, 600);
 }
 
@@ -81,8 +83,19 @@ const timeoutValidaQtdPecas = () => {
   }
   timeoutValidaQtdPecasVal = setTimeout(() => {
     validarQtdPecas();
+    keepAliveVehicle();
   }, 600);
 }
+
+const timeoutObservation = () => {
+  if (timeoutObservationVal) {
+    clearTimeout(timeoutObservationVal);
+  }
+  timeoutObservationVal = setTimeout(() => {
+    keepAliveVehicle();
+  }, 600);
+}
+
 
 function validarModelo() {
   const modeloValue = vehicle.value.modelo
@@ -100,6 +113,7 @@ function validaSegmentacao() {
     return
   }
   segmentacaoNotEmpty.value = true
+  keepAliveVehicle();
 }
 
 function validaTipo() {
@@ -109,6 +123,7 @@ function validaTipo() {
     return
   }
   tipoNotEmpty.value = true
+  keepAliveVehicle();
 }
 
 function validarQtdPecas() {
@@ -128,6 +143,49 @@ const validate = () => {
   validarQtdPecas();
 }
 
+const clearVehicle = () => {
+  vehicle.value = {
+    placa: null,
+    modelo: null,
+    segmentacao: null,
+    tipo: null,
+    qtdPecas: null,
+    observacao: ""
+  }
+}
+
+const VEHICLE_STORAGE = 'currentVehicle'
+
+const clearKeepAliveVehicle = () => {
+  localStorage.removeItem(VEHICLE_STORAGE);
+}
+
+const keepAliveVehicle = () => {
+  const localVehicle = vehicle.value
+
+  const localVehicleJson = JSON.stringify(localVehicle);
+
+  localStorage.setItem(VEHICLE_STORAGE, localVehicleJson);
+}
+
+const setVehicleAlive = () => {
+  setTimeout(() => {
+    if (localStorage.getItem(VEHICLE_STORAGE)) {
+      const aliveVehicleJson = localStorage.getItem(VEHICLE_STORAGE)
+
+      const aliveVehicle = JSON.parse(aliveVehicleJson);
+
+      vehicle.value = aliveVehicle
+
+
+      if (vehicle.value.observacao) {
+        document.querySelector('#detailsObservacao').open = true;
+      }
+    }
+  }, 100)
+
+}
+
 const send = () => {
   if (!vehicle.value.placa || !vehicle.value.modelo || !vehicle.value.segmentacao || !vehicle.value.tipo || !vehicle.value.qtdPecas) {
     validate();
@@ -135,6 +193,9 @@ const send = () => {
   }
 
   console.log("registrado");
+  clearKeepAliveVehicle();
+  clearVehicle();
+
 }
 
 </script>
@@ -202,12 +263,11 @@ const send = () => {
       <p v-if="!qtdPecasNotEmpty" class="error-message">ops, esqueceu de digitar a quantidade de peças!</p>
     </div>
 
-
-    <details>
+    <details id="detailsObservacao">
       <summary>Alguma observação sobre o veículo?</summary>
       <div class="form-control">
         <label for="observacao" class="label">Observação:</label>
-        <textarea class="textarea" v-model="vehicle.observacao" id="observacao"
+        <textarea class="textarea" @keyup="timeoutObservation" v-model="vehicle.observacao" id="observacao"
           placeholder="Ex: veículo com amassado na porta d/d."></textarea>
       </div>
     </details>
