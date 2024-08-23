@@ -1,11 +1,12 @@
 <script setup>
 import { Emitter } from '@/utils/Emitter';
 import { onMounted, ref } from 'vue';
+import { showNotification } from '../../components/notification/notificationService.js';
 
 onMounted(() => {
   Emitter.emit('add-car')
   setTimeout(() => {
-    Emitter.emit('name-route', 'Finalizar etapa troca de peças')
+    Emitter.emit('name-route', 'finalizar etapa troca de peças')
   }, 100);
 
   setVehicleAlive();
@@ -191,8 +192,9 @@ const send = () => {
   }
 
   console.log("registrado");
-  clearKeepAliveVehicle();
-  clearVehicle();
+  showNotification("Registrado com sucesso!", "success")
+  // clearKeepAliveVehicle();
+  // clearVehicle();
 
 }
 
@@ -233,7 +235,8 @@ const send = () => {
           <label for="revenda" class="label-radio revenda">Revenda</label>
           <input type="radio" @change="validaSegmentacao" tabindex="4" id="revenda" name="segmentacao"
             class="input-radio" v-model="vehicle.segmentacao" value="revenda">
-        </div>
+          </div>
+          <p v-if="!segmentacaoNotEmpty" class="error-message">selecione!</p>
       </fieldset>
     </div>
 
@@ -250,6 +253,7 @@ const send = () => {
           <input type="radio" @change="validaTipo" tabindex="6" id="sm" name="tipo" class="input-radio"
             v-model="vehicle.tipo" value="SM">
         </div>
+        <p v-if="!tipoNotEmpty" class="error-message">selecione!</p>
       </fieldset>
     </div>
 
@@ -287,6 +291,7 @@ const send = () => {
 
 .error-message {
   color: red;
-  margin-top: 5px;
+  display: flex;
+  align-items: center;
 }
 </style>
