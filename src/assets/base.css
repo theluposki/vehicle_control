@@ -6,6 +6,7 @@
   --height_header-footer: 60px;
   --page-height: calc(var(--max-height) - 2 * var(--height_header-footer));
   --page-int-height: calc(var(--max-height) - 3 * var(--height_header-footer));
+  --list-vehicle: var(--page-int-height);
   --input-height: 33px;
 
   --dark: #212121;
