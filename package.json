@@ -12,6 +12,8 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "dayjs": "^1.11.13",
+    "dexie": "^4.0.8",
     "pinia": "^2.1.7",
     "remixicon": "^4.3.0",
     "vue": "^3.4.29",

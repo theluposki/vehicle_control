@@ -1,7 +1,11 @@
 <script setup>
-import { Emitter } from '@/utils/Emitter';
 import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { Emitter } from '../../utils/Emitter.js';
+import { db } from '../../db/databaseLocal.js';
 import { showNotification } from '../../components/notification/notificationService.js';
+
+const { push } = useRouter();
 
 onMounted(() => {
   Emitter.emit('add-car')
@@ -171,31 +175,40 @@ const keepAliveVehicle = () => {
 
 const setVehicleAlive = () => {
 
-    if (localStorage.getItem(VEHICLE_STORAGE)) {
-      const aliveVehicleJson = localStorage.getItem(VEHICLE_STORAGE)
+  if (localStorage.getItem(VEHICLE_STORAGE)) {
+    const aliveVehicleJson = localStorage.getItem(VEHICLE_STORAGE)
 
-      const aliveVehicle = JSON.parse(aliveVehicleJson);
+    const aliveVehicle = JSON.parse(aliveVehicleJson);
 
-      vehicle.value = aliveVehicle
+    vehicle.value = aliveVehicle
 
 
-      if (vehicle.value.observacao) {
-        document.querySelector('#detailsObservacao').open = true;
-      }
+    if (vehicle.value.observacao) {
+      document.querySelector('#detailsObservacao').open = true;
     }
+  }
 }
 
-const send = () => {
+const send = async () => {
   if (!vehicle.value.placa || !vehicle.value.modelo || !vehicle.value.segmentacao || !vehicle.value.tipo || !vehicle.value.qtdPecas) {
     validate();
     return
   }
 
-  console.log("registrado");
-  showNotification("Registrado com sucesso!", "success")
-  // clearKeepAliveVehicle();
-  // clearVehicle();
+  const now = new Date().toISOString();
 
+  vehicle.value.date = now
+  console.log(JSON.stringify(vehicle.value, null, 2));
+  const id = await db.vehicle.add({ ...vehicle.value });
+  console.log("id: ", id)
+  if (id) {
+    showNotification("Registrado com sucesso!", "success");
+    clearKeepAliveVehicle();
+    clearVehicle();
+    push('/cars/');
+    return
+  }
+  showNotification("Error ao registrar!", "error")
 }
 
 </script>
@@ -235,8 +248,8 @@ const send = () => {
           <label for="revenda" class="label-radio revenda">Revenda</label>
           <input type="radio" @change="validaSegmentacao" tabindex="4" id="revenda" name="segmentacao"
             class="input-radio" v-model="vehicle.segmentacao" value="revenda">
-          </div>
-          <p v-if="!segmentacaoNotEmpty" class="error-message">selecione!</p>
+        </div>
+        <p v-if="!segmentacaoNotEmpty" class="error-message">selecione!</p>
       </fieldset>
     </div>
 
