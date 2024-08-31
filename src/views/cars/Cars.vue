@@ -1,6 +1,6 @@
 <script setup>
-import { RouterView } from 'vue-router'
 import HeaderIntern from '../../components/header_intern/header_intern.vue'
+import { RouterView } from 'vue-router'
 </script>
 
 <template>

@@ -5,7 +5,6 @@ import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import dayjs from 'dayjs';
 
-
 const { push } = useRouter();
 
 onMounted(async () => {
@@ -58,6 +57,9 @@ const toEditPage = (id) => {
         <div class="right">
           <span class="date">
             {{ formatDate(item.date) }}
+          </span>
+          <span v-if="item.observacao" class="obs">
+            <i class="ri-message-2-line"></i>
           </span>
         </div>
       </li>
@@ -157,5 +159,16 @@ const toEditPage = (id) => {
   display: flex;
   width: max-content;
   border-radius: 20px 0 0 20px;
+}
+
+.item .right .obs {
+  display: flex;
+  align-content: center;
+} 
+
+.item .right .obs i {
+  color: var(--alert);
+  text-shadow: 1px 1px 2px var(--dark);
+  font-size: 22px;
 }
 </style>

@@ -159,6 +159,10 @@ const setVehicleToEdit = async (id) => {
     const vehicleData = await db.vehicle.get(Number(id));
 
     vehicle.value = vehicleData;
+
+    if (vehicle.value.observacao) {
+      document.querySelector('#detailsObservacao').open = true;
+    }
 }
 
 const send = async () => {
