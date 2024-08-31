@@ -179,7 +179,8 @@
   min-width: 100%;
 }
 
-.form-control > .btn {
+.form-control > .btn, .form-group > .btn {
+  width: 100%;
   min-height: var(--input-height);
   border: solid 1px transparent;
   background-color: var(--green2);
@@ -194,7 +195,7 @@
 
   cursor: pointer;
 }
-.form-control > .btn:hover {
+.form-control > .btn:hover, .form-group > .btn:hover {
   opacity: .9;
   transition: all ease .4s;
   -webkit-transition: all ease .4s;
@@ -202,11 +203,11 @@
   -ms-transition: all ease .4s;
   -o-transition: all ease .4s;
 }
-.form-control > .btn:active {
+.form-control > .btn:active, .form-group > .btn:active {
   scale: .95;
 }
 
-.form-control > .btn:focus {
+.form-control > .btn:focus, .form-group > .btn:focus {
   outline: solid 2px var(--green3);
   border: solid 1px var(--white);
 }
@@ -295,4 +296,13 @@ details {
   padding: 0 var(--p-base);
   color: var(--green2);
   cursor: pointer;
+}
+
+.danger {
+  background-color: var(--danger) !important;
+}
+
+.alert {
+  background-color: var(--alert) !important;
+  color: var(--dark) !important;
 }

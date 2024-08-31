@@ -2,7 +2,11 @@
 import { db } from '@/db/databaseLocal';
 import { Emitter } from '@/utils/Emitter';
 import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import dayjs from 'dayjs';
+
+
+const { push } = useRouter();
 
 onMounted(async () => {
   Emitter.emit('list-car');
@@ -22,11 +26,15 @@ const getListAll = async () => {
 }
 
 const defineClassConsumidor = (segmentacao) => {
-  console.log(segmentacao)
   if(segmentacao === 'consumidor') {
     return 'segmentacao consumidor'
   }
   return 'segmentacao revenda'
+}
+
+const toEditPage = (id) => {
+  if(!id) return
+  push(`/cars/edit/${id}`)
 }
 
 </script>
@@ -34,7 +42,7 @@ const defineClassConsumidor = (segmentacao) => {
 <template>
   <main class="page int">
     <ul class="list-cars">
-      <li class="item" v-for="item in list" :key="item.id">
+      <li class="item" v-for="item in list" :key="item.id" @click="toEditPage(item.id)">
         <div class="left">
           <span :class="defineClassConsumidor(item.segmentacao)">
             {{ item.segmentacao }} 
@@ -116,7 +124,7 @@ const defineClassConsumidor = (segmentacao) => {
 
 
 .item .left .placa {
-  color: var(--green3);
+  color: var(--green);
   font-weight: 900;
   font-size: 18px;
   line-height: normal;
@@ -125,7 +133,7 @@ const defineClassConsumidor = (segmentacao) => {
 .item .left .modelo {
   line-height: normal;
   font-weight: bold;
-  color: var(--silver3);
+  color: var(--dark5);
   text-shadow: 0 0 1px var(--green3);
   padding-bottom: 6px;
 }
@@ -142,9 +150,9 @@ const defineClassConsumidor = (segmentacao) => {
   position: absolute;
   top: 2px;
   right: -12px;
-  background-color: var(--dark3);
+  background-color: var(--white5);
   font-size: 10px;
-  color: var(--white);
+  color: var(--dark5);
   padding: 0 var(--p-base);
   display: flex;
   width: max-content;

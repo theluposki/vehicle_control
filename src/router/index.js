@@ -30,9 +30,9 @@ const router = createRouter({
           component: () => import('../views/cars/AddCar.vue')
         },
         { 
-          path: 'details/:id', 
-          name: 'details-cars', 
-          component: () => import('../views/cars/DetailsCar.vue'),
+          path: 'edit/:id', 
+          name: 'edit-cars', 
+          component: () => import('../views/cars/EditCar.vue'),
           params: true
         },
       ]
