@@ -7,6 +7,7 @@ export const useUserStore = defineStore("user", () => {
     nome: "Lucas Oliveira",
     matricula: 420033,
     setor: "Troca de Peças",
+    photoUrl: "https://i.pravatar.cc/150?img=13"
   });
 
   const setUser = (user) => {
