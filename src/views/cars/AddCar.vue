@@ -1,28 +1,28 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { Emitter } from '../../utils/Emitter.js';
 import { db } from '../../db/databaseLocal.js';
 import { showNotification } from '../../components/notification/notificationService.js';
+import { modelosMock } from '../../db/modelos.js';
+import { useUserStore } from '../../stores/user.js';
 
 const { push } = useRouter();
+
+const userStore = useUserStore();
+
+const user = computed(() => userStore.User);
 
 onMounted(() => {
   Emitter.emit('add-car')
   setTimeout(() => {
-    Emitter.emit('name-route', 'finalizar etapa troca de peças')
+    Emitter.emit('name-route', `Finalizar - ${user.value.setor}`)
   }, 100);
 
   setVehicleAlive();
 })
 
-const modelos = ref([
-  'Argo',
-  'Onix',
-  'Onix Plus',
-  'KA',
-  'Mobi'
-])
+const modelos = ref(modelosMock);
 
 const vehicle = ref({
   placa: null,
@@ -30,7 +30,8 @@ const vehicle = ref({
   segmentacao: null,
   tipo: null,
   qtdPecas: null,
-  observacao: ""
+  observacao: "",
+  user: null
 });
 
 const placaValida = ref(true);
@@ -195,6 +196,10 @@ const send = async () => {
     return
   }
 
+  vehicle.value.user = user.value.nome
+  vehicle.value.matricula = user.value.matricula
+  vehicle.value.setor = user.value.setor
+
   const now = new Date().toISOString();
 
   vehicle.value.date = now
@@ -256,16 +261,52 @@ const send = async () => {
     <div class="form-group" id="tipo">
       <fieldset :class="{ 'fieldsetNotSelected': !tipoNotEmpty }">
         <legend>Tipo de serviço</legend>
-        <div class="field">
+
+        <div class="field" v-if="user.setor == 'Troca de Peças'">
           <label for="tp" class="label-radio tp">Troca de peça</label>
           <input type="radio" @change="validaTipo" tabindex="5" id="tp" name="tipo" class="input-radio"
             v-model="vehicle.tipo" value="TP">
         </div>
-        <div class="field">
+        <div class="field" v-if="user.setor == 'Troca de Peças'">
           <label for="sm" class="label-radio sm">Serviço mecânico</label>
           <input type="radio" @change="validaTipo" tabindex="6" id="sm" name="tipo" class="input-radio"
             v-model="vehicle.tipo" value="SM">
         </div>
+
+
+        <div class="field" v-if="user.setor == 'Montagem/Desmontagem'">
+          <label for="montagem" class="label-radio montagem">Montagem</label>
+          <input type="radio" @change="validaTipo" tabindex="5" id="montagem" name="tipo" class="input-radio"
+            v-model="vehicle.tipo" value="MONTAGEM">
+        </div>
+        <div class="field" v-if="user.setor == 'Montagem/Desmontagem'">
+          <label for="desmontagem" class="label-radio sm">Desmontagem</label>
+          <input type="radio" @change="validaTipo" tabindex="6" id="desmontagem" name="tipo" class="input-radio"
+            v-model="vehicle.tipo" value="DESMONTAGEM">
+        </div>
+
+        <div class="field" v-if="user.setor == 'PREPARAÇÃO/PINTURA'">
+          <label for="preparacao" class="label-radio preparacao">Preparação</label>
+          <input type="radio" @change="validaTipo" tabindex="5" id="preparacao" name="tipo" class="input-radio"
+            v-model="vehicle.tipo" value="PREPARACAO">
+        </div>
+        <div class="field" v-if="user.setor == 'PREPARAÇÃO/PINTURA'">
+          <label for="pintura" class="label-radio sm">Pintura</label>
+          <input type="radio" @change="validaTipo" tabindex="6" id="pintura" name="tipo" class="input-radio"
+            v-model="vehicle.tipo" value="PINTURA">
+        </div>
+
+        <div class="field" v-if="user.setor == 'PDC-CONFERENCIA'">
+          <label for="pdc_mecanico" class="label-radio pdc_mecanico">PDC Mecânico</label>
+          <input type="radio" @change="validaTipo" tabindex="5" id="pdc_mecanico" name="tipo" class="input-radio"
+            v-model="vehicle.tipo" value="PDC_MECANICO">
+        </div>
+        <div class="field" v-if="user.setor == 'PDC-CONFERENCIA'">
+          <label for="pdc_conferencia" class="label-radio sm">pdc_conferencia</label>
+          <input type="radio" @change="validaTipo" tabindex="6" id="pdc_conferencia" name="tipo" class="input-radio"
+            v-model="vehicle.tipo" value="PDC_CONFERENCIA">
+        </div>
+
         <p v-if="!tipoNotEmpty" class="error-message">selecione!</p>
       </fieldset>
     </div>

@@ -2,8 +2,8 @@ import Dexie from 'dexie';
 
 export const db = new Dexie('vehicle_control');
 
-db.version(1).stores({
-  vehicle: '++id, placa, modelo, segmentacao, tipo, date, user, funcao',
+db.version(2).stores({
+  vehicle: '++id, placa, modelo, segmentacao, tipo, date, user, setor, matricula',
 });
 
 // "placa": "ABC1D23",

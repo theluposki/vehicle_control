@@ -167,7 +167,7 @@ const toEditPage = (id) => {
 } 
 
 .item .right .obs i {
-  color: var(--alert);
+  color: var(--green3);
   text-shadow: 1px 1px 2px var(--dark);
   font-size: 22px;
 }
