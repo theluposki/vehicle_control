@@ -2,7 +2,7 @@
 import { db } from '@/db/databaseLocal';
 import { Emitter } from '@/utils/Emitter';
 import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { RouterLink, useRouter } from 'vue-router';
 import dayjs from 'dayjs';
 
 const { push } = useRouter();
@@ -40,7 +40,10 @@ const toEditPage = (id) => {
 
 <template>
   <main class="page int">
-    <ul class="list-cars">
+    <div class="list-empty" v-if="list.length <= 0">
+      Nenhum dado inserido. <RouterLink to="/cars/add">Finalizar um veículo agora?</RouterLink>
+    </div>
+    <ul class="list-cars" v-if="list.length > 0">
       <li class="item" v-for="item in list" :key="item.id" @click="toEditPage(item.id)">
         <div class="left">
           <span :class="defineClassConsumidor(item.segmentacao)">
@@ -68,6 +71,9 @@ const toEditPage = (id) => {
 </template>
 
 <style scoped>
+.list-empty {
+  padding: var(--p-base);
+}
 .list-cars {
   list-style: none;
   width: 100%;
