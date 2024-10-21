@@ -4,8 +4,8 @@ import Calendar from './components/calendar.vue'
 </script>
 
 <template>
-  Home
   <main class="page">
+    Home
     <GrafWeek />
     <Calendar />
   </main>

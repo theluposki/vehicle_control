@@ -125,10 +125,12 @@ const nextMonth = () => {
     flex-direction: column;
     gap: 1px;
     margin: calc(2 * var(--p-base)) 0;
+    padding: 0 var(--p-base);
 }
 
 .container .controllers {
     --height-controllers: 25px;
+    border-radius: 4px;
     min-height: var(--height-controllers);
     max-height: var(--height-controllers);
     background-color: var(--green2);
@@ -205,6 +207,7 @@ const nextMonth = () => {
 
 .container .month {
     --height-month: 25px;
+    border-radius: 4px;
     min-height: var(--height-month);
     max-height: var(--height-month);
     background-color: var(--green2);
