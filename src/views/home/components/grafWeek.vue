@@ -4,30 +4,37 @@ import { ref } from 'vue'
 const semana = ref([
     {
         diaSemana: 'dom',
+        diaNum: '20/10',
         qtd: 0
     },
     {
         diaSemana: 'seg',
+        diaNum: '21/10',
         qtd: 7
     },
     {
         diaSemana: 'ter',
+        diaNum: '22/10',
         qtd: 19
     },
     {
         diaSemana: 'qua',
+        diaNum: '23/10',
         qtd: 50
     },
     {
         diaSemana: 'qui',
+        diaNum: '24/10',
         qtd: 5
     },
     {
         diaSemana: 'sex',
+        diaNum: '25/10',
         qtd: 6
     },
     {
         diaSemana: 'sab',
+        diaNum: '26/10',
         qtd: 2
     },
 ])
@@ -40,6 +47,7 @@ const semana = ref([
                 <div class="ponto" v-for="ponto in item.qtd"></div>
             </span>
             <span class="day">{{ item.diaSemana }}</span>
+            <span class="dayNum">{{ item.diaNum }}</span>
         </div>
     </div>
 </template>
@@ -105,6 +113,18 @@ const semana = ref([
     align-items: center;
     justify-content: center;
     font-weight: bold;
+    border-radius: 4px;
+}
+
+.grafweek .week .dayNum {
+    width: 100%;
+    background-color: var(--white2);
+    color: var(--green2);
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: normal;
     border-radius: 4px;
 }
 </style>
