@@ -46,7 +46,7 @@ const semana = ref([
 
 <style scoped>
 .grafweek {
-    background-color: beige;
+    background-color: var(--white2);
     padding: var(--p-base);
     display: flex;
     gap: 10px;
