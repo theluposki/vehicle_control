@@ -124,6 +124,7 @@ const nextMonth = () => {
     display: flex;
     flex-direction: column;
     gap: 1px;
+    margin: calc(2 * var(--p-base)) 0;
 }
 
 .container .controllers {
@@ -161,6 +162,7 @@ const nextMonth = () => {
     flex: 1;
     display: flex;
     gap: 1px;
+    padding: var(--p-base);
 }
 
 .container .calendar .column {
